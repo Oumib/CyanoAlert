@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/données.css" />
+    <link rel="stylesheet" type="text/css" href="css/header.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.3/docx.umd.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Dashboard - CyanoAlert</title>
+    <style>
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .right {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .menu-button, .right button {
+            background-color: #ffffff;
+            border: 2px solid #fafafa;
+            color: #1cb3b3;
+            border-radius: 15px;
+            padding: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+                /* Ajoutés */
+            font-family: Verdana, Geneva, sans-serif;
+            font-weight: bold;
+        }
+
+        .menu-button:hover,
+        .right button:hover {
+            background-color: #1cb3b3;
+            color: white;
+        }
+
+        /* Masquer le texte à l'intérieur des boutons */
+        .menu-button span {
+            display: none;
+        }
+
+        /* Tooltips avec l'attribut title */
+        .menu-button[title],
+        .right button[title] {
+            position: relative;
+        }
+
+        .menu-button[title]::after,
+        .right button[title]::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            white-space: nowrap;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .menu-button[title]:hover::after,
+        .right button[title]:hover::after {
+            opacity: 1;
+        }
+    </style>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Adapter pour l'axe temps -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body style="overflow-y: auto;">
+    <!--header-->
+    <header id="header">
+        <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+        <ul>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+            <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+            <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+            <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+            <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+            <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+        </ul>
+    </header>
+
+    <div class="top-bar">
+        <div class="left">
+            <label for="filterType">Filtrer par :</label>
+            <select id="filterType">
+                <option value="all" onclick="fetchDataAndDisplay()">Tous</option>
+                <option value="lt60000">&lt; 60000</option>
+                <option value="between60000and100000">Entre 60000 et 100000</option>
+                <option value="gt100000">&gt; 100000</option>
+            </select>
+
+            <label for="searchDate">Rechercher par date :</label>
+            <input type="date" id="searchDate" />
+            <button onclick="searchByDate()" aria-label="Recherche par date" style="margin-left:5px;">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Boutons principaux -->
+        <div class="buttons-container">
+            <button class="menu-button"  onclick="openModal()" title="Nouvelle entrée">➕ Nouvelle entrée</button>
+            <button class="menu-button" id="openVisualModal" title="Visualisation et analyse intelligente">📊 Visualiser & Analyser</button>
+
+
+        </div>
+
+
+    </div>
+
+    <!-- Modal Visualisation amélioré -->
+    <div id="visualModal" style="
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+    ">
+        <div style="
+            background: white;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        ">
+            <button id="closeVisualModal" aria-label="Fermer la fenêtre" style="
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: transparent;
+                border: none;
+                font-size: 28px;
+                font-weight: bold;
+                color: #333;
+                cursor: pointer;
+            ">&times;</button>
+
+            <h3 style="text-align: center; margin-bottom: 30px; font-size: 24px;">Choisissez une option :</h3>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+                <button id="showAllData" style="
+                    padding: 12px 24px;
+                    font-size: 16px;
+                    background-color: #1cb3b3;
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                ">Visualiser toutes les données</button>
+            </div>
+
+            <h4 style="text-align: center; margin-bottom: 20px; font-size: 20px;">Ou visualiser par intervalle de dates :</h4>
+
+            <div style="display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <div>
+                    <label for="startDate" style="display: block; margin-bottom: 5px;">De :</label>
+                    <input type="date" id="startDate" style="
+                        padding: 10px;
+                        border-radius: 8px;
+                        border: 1px solid #ccc;
+                        font-size: 16px;
+                    " />
+                </div>
+                <div>
+                    <label for="endDate" style="display: block; margin-bottom: 5px;">À :</label>
+                    <input type="date" id="endDate" style="
+                        padding: 10px;
+                        border-radius: 8px;
+                        border: 1px solid #ccc;
+                        font-size: 16px;
+                    " />
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <button id="showIntervalData" style="
+                    padding: 10px 30px;
+                    font-size: 16px;
+                    background-color: #1cb3b3;
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                ">Visualiser l'intervalle</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Tableau des données -->
+    <div id="tableContainer">
+        <table id="dataTable" aria-label="Tableau des données environnementales">
+            <thead>
+                <tr>
+                    <th>Density</th>
+                    <th>Chlorophyll</th>
+                    <th>Microcystins</th>
+                    <th>Air Temp</th>
+                    <th>Water Temp</th>
+                    <th>pH</th>
+                    <th>Oxygen</th>
+                    <th>Conductivity</th>
+                    <th>Salinity</th>
+                    <th>Turbidity</th>
+                    <th>Nitrates</th>
+                    <th>Nitrites</th>
+                    <th>Ammoniums</th>
+                    <th>Phosphorus</th>
+                    <th>Depth</th>
+                    <th>Wind</th> 
+                    <th>Station</th>
+                    <th  style="width: 200px;">Date</th>
+
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Données insérées ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="paginationControls" style="text-align: center; margin-top: 10px;">
+        <button onclick="prevPage()" style="font-size: 1.5em; background: none; border: none; cursor: pointer; color: #1cb3b3;">&#x276E;</button>
+        <span id="pageIndicator">Page 1</span>
+        <button onclick="nextPage()" style="font-size: 1.5em; background: none; border: none; cursor: pointer; color: #1cb3b3;">&#x276F;</button>
+    </div>
+
+
+    <!-- Modal Formulaire d'ajout -->
+    <div class="modal" id="dataModal" style="display:none;">
+        <div class="modal-content">
+            <button class="close" onclick="closeModal()" aria-label="Fermer la fenêtre">&times;</button>
+            <h2>Ajouter une nouvelle entrée</h2>
+            <form id="addForm">
+                <input type="hidden" id="user_id" name="user_id" value="" />
+
+                <div class="form-row">
+                    <input type="number" name="density" placeholder="Density" required step="any" />
+                    <input type="number" name="chlorophyll" placeholder="Chlorophyll" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="microcystins" placeholder="Microcystins" required step="any" />
+                    <input type="number" name="air_temp" placeholder="Air Temp" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="water_temp" placeholder="Water Temp" required step="any" />
+                    <input type="number" name="ph" placeholder="pH" required step="0.01" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="oxygen" placeholder="Oxygen" required step="any" />
+                    <input type="number" name="conductivity" placeholder="Conductivity" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="salinity" placeholder="Salinity" required step="any" />
+                    <input type="number" name="turbidity" placeholder="Turbidity" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="nitrates" placeholder="Nitrates" required step="any" />
+                    <input type="number" name="nitrites" placeholder="Nitrites" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="ammoniums" placeholder="Ammoniums" required step="any" />
+                    <input type="number" name="phosphorus" placeholder="Phosphorus" required step="any" />
+                </div>
+                <div class="form-row">
+                    <input type="number" name="depth" placeholder="Depth" required step="any" />
+                </div>
+                <div class="form-row">
+                    <label><input type="radio" name="wind" value="abritee" required /> Abritée</label>
+                    <label><input type="radio" name="wind" value="exposee" /> Exposée</label>
+                    <label><input type="radio" name="wind" value="aucun" /> Aucun Rôle</label>
+                </div>
+
+                <div class="form-row">
+                    <input type="text" name="station" placeholder="Station" required />
+                    <input type="date" name="date" required />
+                </div>
+                <div class="form-button-right">
+                    <button type="submit">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal loading -->
+    <div id="loadingModal" class="modal" style="display: none; justify-content: center; align-items: center; color: white; font-size: 20px;">
+        <div style="background:#222; padding:20px; border-radius:8px; text-align:center;">
+            <p>Veuillez patienter, le système est en cours de prédiction...</p>
+        </div>
+    </div>
+
+    <div class="modal" id="analysisModal" style="display:none;">
+                <div class="modal-content">
+                    <button class="close" onclick="closeAnalysis()" aria-label="Fermer la fenêtre">&times;</button>
+                    <h2>Analyse - Choisissez une variable à afficher</h2>
+
+                    <!-- Conteneur flex aligné horizontalement -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <label for="yAxisSelect" style="white-space:initial;">Choisir la variable pour l'axe Y :</label>
+                        <select id="yAxisSelect" >
+                            <!-- Options remplies dynamiquement par JS -->
+                        </select>
+                        <button id="downloadChart" 
+                            style="padding: 5px 14px; font-size: 16px; display: flex; align-items: center; gap: 8px; background-color: #1cb3b3; color: white; border: none; border-radius: 6px; cursor: pointer;margin-left: 320px;"
+                            title="Télécharger uniquement le graphique en image">
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </div>
+
+
+                    <canvas id="analysisChart" width="750" height="400"></canvas>
+
+                    <div class="form-button-right" style="margin-top: 15px;">
+                        <input type="text" id="accessKeyInput" placeholder="Entrez votre clé d'accès" />
+                        <div id="keyErrorMsg" style="color:red; display:none; margin-top:5px;"></div>
+                        <button id="analyseBtn" style="margin-top: 10px;">Lancer l'analyse</button>
+                    </div>
+                </div>
+
+
+                <div id="ai-analysis" style="display: none;">
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                        <h2 style="margin: 0;">🧠 Analyse intelligente</h2>
+                        <button id="downloadDocx"
+                            style="padding: 8px 14px; font-size: 16px; display: flex; align-items: center; gap: 8px; background-color: #2b579a; color: white; border: none; border-radius: 6px; cursor: pointer;"
+                            title="Télécharger l'analyse au format Word">
+                            <i class="fa fa-download"></i>
+                            Générer un rapport
+                        </button>
+                    </div>
+
+                    <div id="ai-analysis-content" class="markdown-style"></div>
+
+
+                </div>
+
+    </div>
+
+
+
+
+    <!-- Modal Analyse Avancée -->
+    <div class="modal" id="advancedAnalysisModal" style="display:none;">
+        <div class="modal-content">
+            <button class="close" onclick="closeAdvancedAnalysis()" aria-label="Fermer la fenêtre">&times;</button>
+            <h2>Analyse avancée - Prédiction</h2>
+
+            <label for="predictDate">Entrez une date (AAAA-MM-JJ) :</label>
+            <input type="date" id="predictDate" />
+            <button onclick="predict()">Prédire</button>
+
+            <div id="predictionResult"></div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+    <script>
+        let data = []; // Toutes les données
+        let filteredData = []; // Données après filtre ou recherche
+        let currentPage = 1;
+        const rowsPerPage = 10;
+        let chartInstance = null;  // Instance Chart.js
+
+        const SERVER_URL = 'http://localhost:3000';
+
+        async function fetchDataAndDisplay() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/all`);
+                data = await response.json();
+                filteredData = [...data]; // Copie initiale
+                currentPage = 1;
+                renderTable();
+            } catch (err) {
+                console.error("Erreur lors de la récupération :", err);
+                alert("Erreur lors de la récupération des données.");
+            }
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = "";
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            pageData.forEach(row => {
+                const tr = document.createElement('tr');
+
+                for (const key in row) {
+                    const td = document.createElement('td');
+                    let cell = row[key];
+
+                    if (key === "date" && typeof cell === "string") {
+                        cell = cell.split("T")[0];
+                    }
+
+                    td.textContent = typeof cell === "boolean" ? (cell ? "Oui" : "Non") : cell;
+                    tr.appendChild(td);
+                }
+
+                tableBody.appendChild(tr);
+            });
+
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            document.getElementById('pageIndicator').textContent = `Page ${currentPage} / ${totalPages}`;
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        }
+
+        function searchByDate() {
+            const inputDate = document.getElementById('searchDate').value;
+            if (!inputDate) {
+                alert("Veuillez sélectionner une date.");
+                return;
+            }
+
+            filteredData = data.filter(row => row.date?.split("T")[0] === inputDate);
+            if (filteredData.length === 0) {
+                alert("Aucune donnée trouvée pour cette date.");
+            }
+            currentPage = 1;
+            renderTable();
+        }
+
+        document.getElementById('filterType').addEventListener('change', function () {
+            switch (this.value) {
+                case 'lt60000':
+                    filteredData = data.filter(row => row.density < 60000);
+                    break;
+                case 'between60000and100000':
+                    filteredData = data.filter(row => row.density >= 60000 && row.density <= 100000);
+                    break;
+                case 'gt100000':
+                    filteredData = data.filter(row => row.density > 100000);
+                    break;
+                default:
+                    filteredData = [...data];
+            }
+            currentPage = 1;
+            renderTable();
+        });
+
+        function openModal() {
+            dataModal.style.display = "flex";
+        }
+
+        function closeModal() {
+            dataModal.style.display = "none";
+        }
+        document.getElementById('addForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            formData.set('user_id', localStorage.getItem('user_id') || 'utilisateur_inconnu');
+
+            try {
+                const response = await fetch(`${SERVER_URL}/api/add`, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) throw new Error(`Erreur serveur : ${response.statusText}`);
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // 🎯 Ajout réussi, on lance la prédiction
+                    try {
+                        // 1. Récupérer les 7 derniers jours
+                        const last7Response = await fetch(`${SERVER_URL}/api/last7days`);
+                        if (!last7Response.ok) throw new Error('Erreur lors de la récupération des données');
+
+                        const last7Data = await last7Response.json();
+
+                        // 2. Envoyer à la prédiction
+                        const predictResponse = await fetch(`${SERVER_URL}/predict-bloom`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(last7Data)
+                        });
+
+                        if (!predictResponse.ok) throw new Error('Erreur lors de la prédiction');
+
+                        const prediction = await predictResponse.json();
+
+                        console.log("🌊 Résultat prédiction bloom:", prediction);
+
+                        alert(`Prédiction bloom : ${prediction.bloom ? 'Présence probable' : 'Absence probable'}`);
+
+                        // Optionnel : ici tu peux mettre à jour l'UI au lieu de recharger la page
+
+                    } catch (error) {
+                        console.error("Erreur lors de la prédiction :", error);
+                        alert("Erreur lors de la prédiction du bloom.");
+                    }
+                } else {
+                    alert("Erreur lors de l'ajout des données.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de l'envoi :", error);
+                alert("Erreur lors de l'envoi des données au serveur.");
+            }
+        });
+
+        function closeAnalysis() {
+            document.getElementById('analysisModal').style.display = 'none';
+        }
+
+        function closeAdvancedAnalysis() {
+            document.getElementById('advancedAnalysisModal').style.display = 'none';
+        }
+
+        function verifyAccessKey() {
+            alert("Fonction à implémenter.");
+        }
+
+        function predict() {
+            alert("Fonction à implémenter.");
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDataAndDisplay);
+        window.onload = fetchDataAndDisplay;
+                
+
+        // Charger les données au chargement de la page
+        fetchDataAndDisplay();
+    </script>
+
+    <script>
+        const yVariables = [
+            "density", "chlorophyll", "microcystins", "air_temp", "water_temp",
+            "pH", "oxygen", "conductivity", "salinity", "turbidity",
+            "nitrates", "nitrites", "ammoniums", "phosphorus"
+        ];
+
+        const visualModal = document.getElementById("visualModal");
+        const analysisModal = document.getElementById("analysisModal");
+        let filteredDataToSend = []; // données actuelles affichées (filtrées ou pas)
+
+        document.getElementById("openVisualModal").addEventListener("click", () => {
+            visualModal.style.display = "flex";
+        });
+
+        document.getElementById("closeVisualModal").addEventListener("click", () => {
+            visualModal.style.display = "none";
+        });
+
+        document.querySelectorAll("#analysisModal .close").forEach(btn => {
+            btn.addEventListener("click", () => {
+                analysisModal.style.display = "none";
+            });
+        });
+
+        function populateYAxisSelect() {
+            const select = document.getElementById("yAxisSelect");
+            select.innerHTML = "";
+            yVariables.forEach(v => {
+                const option = document.createElement("option");
+                option.value = v;
+                option.textContent = v.charAt(0).toUpperCase() + v.slice(1);
+                select.appendChild(option);
+            });
+        }
+
+        async function fetchDataAndDisplay() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/all`);
+                data = await response.json();
+                console.log("Données chargées :", data);
+                populateYAxisSelect();
+            } catch (err) {
+                console.error("Erreur lors de la récupération :", err);
+                alert("Erreur lors de la récupération des données.");
+            }
+        }
+
+        function showAnalysisChart(dataset, yVar) {
+            const sortedData = dataset.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+            filteredDataToSend = sortedData; // <-- On stocke les données à envoyer à l'API
+
+            const labels = [];
+            const values = [];
+
+            sortedData.forEach(row => {
+                if (row.date && row[yVar] !== undefined && row[yVar] !== null && row[yVar] !== "") {
+                    labels.push(row.date.split("T")[0]);
+                    values.push(Number(row[yVar]));
+                }
+            });
+
+            console.log(`Affichage de la variable "${yVar}" avec ${values.length} points.`);
+
+            if (values.length === 0) {
+                alert(`Aucune donnée trouvée pour la variable "${yVar}".`);
+                return;
+            }
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const ctx = document.getElementById("analysisChart").getContext("2d");
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: yVar.charAt(0).toUpperCase() + yVar.slice(1),
+                        data: values,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.3,
+                        fill: true,
+                        backgroundColor: 'rgba(75,192,192,0.2)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                tooltipFormat: 'yyyy-MM-dd',
+                                displayFormats: { day: 'yyyy-MM-dd' }
+                            },
+                            title: { display: true, text: 'Date' }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: yVar.charAt(0).toUpperCase() + yVar.slice(1)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ✅ BOUTON : Lancer l'analyse avec envoi des données affichées
+        document.getElementById("analyseBtn").addEventListener("click", async () => {
+            const btn = document.getElementById("analyseBtn");
+            const originalText = btn.textContent;
+
+            const keyInput = document.getElementById("accessKeyInput").value.trim();
+            const errorMsg = document.getElementById("keyErrorMsg");
+            const yVar = document.getElementById("yAxisSelect").value;
+
+            if (keyInput === "") {
+                errorMsg.style.display = "block";
+                errorMsg.textContent = "Veuillez entrer votre clé d'accès.";
+                return;
+            }
+
+            if (keyInput === "2025") {
+                errorMsg.style.display = "none";
+
+                if (filteredDataToSend.length === 0) {
+                    alert("Les données ne sont pas prêtes.");
+                    return;
+                }
+
+                analysisModal.style.display = "flex";
+                showAnalysisChart(filteredDataToSend, yVar); // Réaffiche le graphique (optionnel)
+
+                // Affiche spinner + disable bouton
+                btn.disabled = true;
+                btn.innerHTML = 'Analyse en cours <span class="spinner"></span>';
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/analyse', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ data: filteredDataToSend })
+                    });
+
+                    const result = await response.json();
+                    const rawMarkdown = result.analysis; // ta réponse AI
+                    const htmlContent = marked.parse(rawMarkdown); // transforme en HTML
+
+                    document.getElementById("ai-analysis-content").innerHTML = htmlContent;
+                    document.getElementById("ai-analysis").style.display = "block";
+
+                } catch (error) {
+                    console.error("Erreur API :", error);
+                    alert("Erreur lors de l'envoi à l'API.");
+                }
+
+                // Restaure bouton
+                btn.disabled = false;
+                btn.textContent = originalText;
+
+                if (visualModal.style.display === "flex") visualModal.style.display = "none";
+
+            } else {
+                errorMsg.style.display = "block";
+                errorMsg.innerHTML = 'Clé erronée. Consultez notre <a href="offre.html" style="color:blue;">page offres</a>.';
+            }
+        });
+
+        // ✅ Affiche toutes les données
+        document.getElementById("showAllData").addEventListener("click", () => {
+            if (data.length === 0) {
+                alert("Données non chargées.");
+                return;
+            }
+            visualModal.style.display = "none";
+            analysisModal.style.display = "flex";
+
+            const yVar = document.getElementById("yAxisSelect").value;
+            showAnalysisChart(data, yVar);
+        });
+
+        // ✅ Affiche un intervalle de dates
+        document.getElementById("showIntervalData").addEventListener("click", () => {
+            const start = document.getElementById("startDate").value;
+            const end = document.getElementById("endDate").value;
+
+            if (!start || !end) {
+                alert("Veuillez choisir une plage de dates.");
+                return;
+            }
+            if (start > end) {
+                alert("La date de début doit précéder la date de fin.");
+                return;
+            }
+
+            const filtered = data.filter(row => {
+                const dateStr = row.date ? row.date.split("T")[0] : null;
+                return dateStr && dateStr >= start && dateStr <= end;
+            });
+
+            if (filtered.length === 0) {
+                alert("Aucune donnée dans cet intervalle.");
+                return;
+            }
+
+            visualModal.style.display = "none";
+            analysisModal.style.display = "flex";
+
+            const yVar = document.getElementById("yAxisSelect").value;
+            showAnalysisChart(filtered, yVar);
+        });
+
+        // Sélection de la variable Y
+        document.getElementById("yAxisSelect").addEventListener("change", () => {
+            if (filteredDataToSend.length === 0) return;
+            const yVar = document.getElementById("yAxisSelect").value;
+            showAnalysisChart(filteredDataToSend, yVar);
+        });
+
+
+        document.getElementById("downloadDocx").addEventListener("click", async () => {
+            const { Document, Packer, Paragraph, TextRun, ImageRun, HeadingLevel } = window.docx;
+
+            const chartCanvas = document.getElementById("analysisChart");
+            const imageBase64 = chartCanvas.toDataURL("image/png");
+            const imageBuffer = await fetch(imageBase64).then(res => res.arrayBuffer());
+
+            const rawText = document.getElementById("ai-analysis-content").innerText;
+
+            // Découpe intelligente par titres / paragraphes
+            const sections = rawText.split(/\n\s*\n/); // séparateur = double saut de ligne
+
+            const docContent = [];
+
+            // Titre principal
+            docContent.push(new Paragraph({
+                text: "🧠 Analyse intelligente",
+                heading: HeadingLevel.HEADING_1,
+                spacing: { after: 300 }
+            }));
+
+            // Ajout du graphique
+            docContent.push(new Paragraph({
+                children: [
+                    new ImageRun({
+                        data: imageBuffer,
+                        transformation: { width: 600, height: 300 }
+                    })
+                ],
+                spacing: { after: 300 }
+            }));
+
+            // Ajouter chaque bloc de texte comme un paragraphe
+            sections.forEach(block => {
+                const cleaned = block.trim();
+                if (cleaned.length === 0) return;
+
+                // Si bloc commence par un chiffre + point ou "Conclusion", faire un titre
+                if (/^\d+\./.test(cleaned) || /^Conclusion/.test(cleaned)) {
+                    docContent.push(new Paragraph({
+                        text: cleaned,
+                        heading: HeadingLevel.HEADING_2,
+                        spacing: { after: 200 }
+                    }));
+                } else if (/^Mesures à Prendre|Périodes à Haut Risque|Facteurs à Surveiller/.test(cleaned)) {
+                    docContent.push(new Paragraph({
+                        text: cleaned,
+                        heading: HeadingLevel.HEADING_3,
+                        spacing: { after: 150 }
+                    }));
+                } else {
+                    docContent.push(new Paragraph({
+                        children: [new TextRun({ text: cleaned, size: 24 })],
+                        spacing: { after: 150 }
+                    }));
+                }
+            });
+
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: docContent
+                }]
+            });
+
+            const blob = await Packer.toBlob(doc);
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "analyse.docx";
+            link.click();
+        });
+
+        document.getElementById("downloadChart").addEventListener("click", function () {
+            const canvas = document.getElementById("analysisChart");
+            const image = canvas.toDataURL("image/png");
+
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "graphique_cyano.png";
+            link.click();
+        });
+
+               // Charger au chargement de la page
+        document.addEventListener('DOMContentLoaded', fetchDataAndDisplay);
+    </script>
+
+
+
+</body>
+</html>

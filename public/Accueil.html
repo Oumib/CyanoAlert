@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CyanoAlert</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/Accueil.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body style="overflow-y: auto;">
+<header id="header">
+    <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+    <ul>
+        <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+        <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+        <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+        <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+        <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+        <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+        <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+        <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+    </ul>
+</header>
+
+
+    <div>
+        <!-- Slider automatique -->
+        <div class="e-slider">
+            <div class="e-slide-track">
+                <img class="e-slide" src="image/barrage.jpg" alt="Image 1">
+                <img class="e-slide" src="image/barrage2.jpg" alt="Image 2">
+                <img class="e-slide" src="image/cyan.jpg" alt="Image 3">
+                <img class="e-slide" src="image/Cyanobacteria-57f2f6a63df78c690f68d491.jpg" alt="Image 4">
+                <img class="e-slide" src="image/erie_oli_2019211.jpg" alt="Image 5">
+                <img class="e-slide" src="image/free-photo-of-water-flowing-over-dam.jpeg" alt="Image 6">
+                <img class="e-slide" src="image/image.png" alt="Image 7">
+                <img class="e-slide" src="image/lakeeriebloom_oli2_20240813.jpg" alt="Image 8">
+            </div>
+        </div>
+
+        <h1 class="h">🌊 Anticipez les blooms, protégez nos eaux</h1>
+
+        <section class="cyano-section">
+            <div class="cyano-text">
+                <h2>🔍 À propos de CyanoAlert</h2>
+                <p>CyanoAlert est une plateforme intelligente qui détecte et prédit les blooms de cyanobactéries dans les eaux douces...</p>
+            </div>
+            <img src="image/logo_cyano.png" alt="Logo CyanoAlert" class="illustration">
+        </section>
+
+        <section class="cyano-section">
+            <img src="image/Cyanobacteria-57f2f6a63df78c690f68d491.jpg" alt="Cyanobactéries" class="illustration">
+            <div class="cyano-text">
+                <h2>🧬 C’est quoi une cyanobactérie ?</h2>
+                <p>Ce sont des micro-organismes présents naturellement dans l’eau...</p>
+            </div>
+        </section>
+
+        <section class="cyano-section">
+            <div class="cyano-text">
+                <h2>📍 En Algérie</h2>
+                <ul>
+                    <li><strong>Mexa (2021)</strong> : Eau trouble et odeur étrange.</li>
+                    <li><strong>Foum El Gherza (2019)</strong> : Présence de Microcystis toxique.</li>
+                    <li><strong>Ghrib (2020)</strong> : Impact sur l’irrigation en été.</li>
+                    <li><strong>Lac Réghaïa (2018)</strong> : Effets sur la pêche et les oiseaux.</li>
+                </ul>
+                <p>Des cas fréquents qui rappellent l’importance de la prévention.</p>
+            </div>
+            <img src="image/image.png" alt="Bloom en Algérie" class="illustration">
+        </section>
+
+        <section class="cyano-section">
+            <img src="image/cyan.jpg" alt="Cas mondiaux" class="illustration">
+            <div class="cyano-text">
+                <h2>🌍 Dans le monde</h2>
+                <ul>
+                    <li><strong>Lake Erie, USA</strong> : 400 000 personnes sans eau potable.</li>
+                    <li><strong>Lac Taihu, Chine</strong> : Blooms annuels → coupures d’eau.</li>
+                    <li><strong>Barwon River, Australie</strong> : Restrictions d’eau.</li>
+                    <li><strong>Lac Varese, Italie</strong> : Tourisme impacté.</li>
+                    <li><strong>Lac Victoria, Afrique</strong> : Pêche et biodiversité en danger.</li>
+                </ul>
+                <p>Un enjeu planétaire lié au climat et aux activités humaines.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUserId = urlParams.get('user_id');
+        const storedUserId = localStorage.getItem('user_id');
+
+        // Redirection si non connecté
+        if (!storedUserId) {
+            alert("Veuillez vous connecter.");
+            window.location.replace('auth.html');
+            throw new Error("Utilisateur non connecté");
+        }
+
+        // Corriger l'URL si user_id dans l'URL ne correspond pas à celui du localStorage
+        if (urlUserId !== storedUserId) {
+            window.location.replace(`${window.location.pathname}?user_id=${storedUserId}`);
+            throw new Error("Redirection corrigée");
+        }
+
+        // Mise à jour des liens du header
+        document.querySelectorAll('header a').forEach(link => {
+            let href = link.getAttribute('href');
+
+            if (
+                href &&
+                href.endsWith('.html') &&
+                href !== 'auth.html' &&
+                !href.includes('?user_id=')
+            ) {
+                link.setAttribute('href', `${href}?user_id=${storedUserId}`);
+            }
+        });
+
+        // Déconnexion
+        const SERVER_URL = 'http://localhost:3000';
+        const logoutLink = document.querySelector('a[href^="auth.html"]');
+
+        if (logoutLink) {
+            logoutLink.addEventListener('click', async function (e) {
+                e.preventDefault();
+                try {
+                    await fetch(`${SERVER_URL}/api/logout`, {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                } catch (error) {
+                    console.error('Erreur serveur lors de la déconnexion :', error);
+                }
+
+                localStorage.removeItem('user_id');
+                window.location.replace('auth.html');
+            });
+        }
+    </script>
+    <script>
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        try {
+        const response = await fetch('http://localhost:3000/api/logout', {
+            method: 'POST',
+            credentials: 'include', // Très important pour envoyer les cookies de session
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message); // Optionnel
+            // Redirection vers la page de connexion
+            window.location.href = 'auth.html';
+        } else {
+            alert('Erreur lors de la déconnexion');
+        }
+        } catch (error) {
+        console.error('Erreur de requête :', error);
+        alert('Erreur réseau lors de la déconnexion.');
+        }
+    });
+    </script>
+
+
+</body>
+</html>

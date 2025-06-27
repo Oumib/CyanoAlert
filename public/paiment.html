@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paiement par carte CCP</title>
+  <link rel="stylesheet" href="css\connecter.css"> 
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div id="login-box">
+    <div class="inscription">Paiement par carte CCP</div>
+    <p class="text2">Veuillez entrer les informations de votre carte Edahabia</p>
+
+    <form action="traitement_paiement.php" method="POST">
+      <input type="text" name="nom" placeholder="Nom du titulaire" required>
+      <input type="text" name="numero" placeholder="Numéro de carte (16 chiffres)" maxlength="16" required>
+      <input type="text" name="date_exp" placeholder="Date d'expiration (MM/AA)" required>
+      <input type="text" name="cvv" placeholder="Code CVV (3 chiffres)" maxlength="3" required>
+      <input type="text" name="montant" placeholder="Montant (DZD)" required>
+
+      <input type="submit" value="Payer maintenant">
+    </form>
+
+    <a href="offre.html" class="texte">Annuler</a>
+  </div>
+
+</body>
+</html>

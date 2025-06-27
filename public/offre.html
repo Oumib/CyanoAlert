@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyanoAlert</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="css\offre.css">
+  <link rel="stylesheet" type="text/css" href="css\header.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> 
+</head>
+<body style="overflow-y: auto;">
+  <!--header-->
+    <!--header-->
+    <header id="header">
+        <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+        <ul>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+            <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+            <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+            <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+            <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+            <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+        </ul>
+    </header>
+  
+
+  <div>
+    <!-- Slider automatique -->
+    <div class="e-slider">
+        <div class="e-slide-track">
+            <img class="e-slide" src="image/barrage.jpg" alt="Image 1">
+            <img class="e-slide" src="image/barrage2.jpg" alt="Image 2">
+            <img class="e-slide" src="image/cyan.jpg" alt="Image 3">
+            <img class="e-slide" src="image/Cyanobacteria-57f2f6a63df78c690f68d491.jpg" alt="Image 4">
+            <img class="e-slide" src="image/erie_oli_2019211.jpg" alt="Image 1">
+            <img class="e-slide" src="image/free-photo-of-water-flowing-over-dam.jpeg" alt="Image 2">
+            <img class="e-slide" src="image/image.png" alt="Image 3">
+            <img class="e-slide" src="image/lakeeriebloom_oli2_20240813.jpg" alt="Image 4">
+        </div>
+    </div>
+
+    <!-- Section des Offres principales -->
+    <section class="offres-section">
+
+        <div class="offre-box">
+            <h2>Offre 1 an</h2>
+            <p>Accès complet aux données, alertes en temps réel </p>
+            <p class="prix">23 880 DA (prix total)</p>
+            <a href="paiment.html" class="btn-offre">Souscrire</a>
+          </div>
+        
+          <div class="offre-box">
+            <h2>Offre 2 ans</h2>
+            <p>Accès complet aux données, alertes en temps réel </p>
+            <p class="prix">42 960 DA (prix total)</p>
+            <a href="paiment.html" class="btn-offre">Souscrire</a>
+          </div>
+        
+          <div class="offre-box">
+            <h2>Offre 5 ans</h2>
+            <p>Accès complet aux données, alertes en temps réel et rapports mensuels personnalisés.</p>
+            <p class="prix">89 400 DA (prix total)</p>
+            <a href="paiment.html" class="btn-offre">Souscrire</a>
+          </div>
+        
+          <div class="offre-box">
+            <h2>Offre 10 ans</h2>
+            <p>Accès complet aux données, alertes en temps réel et rapports mensuels personnalisés.</p>
+            <p class="prix">154 800 DA (prix total)</p>
+            <a href="paiment.html" class="btn-offre">Souscrire</a>
+          </div>
+        </section>
+
+    <!-- Section Services Complémentaires individuels -->
+    <section class="offres-section">
+
+      <div class="offre-box">
+          <h2>Rapport Analytique Mensuel</h2>
+          <p>Recevez un rapport détaillé chaque mois pour suivre l’évolution des blooms.</p>
+          <p class="prix">18 000 DA (prix annuel)</p>
+          <a href="paiment.html" class="btn-offre">Souscrire</a>
+      </div>
+
+      <div class="offre-box">
+          <h2>Analyse Avancée des Résultats</h2>
+          <p>Accès à des analyses approfondies et personnalisées des données collectées.</p>
+          <p class="prix">30 000 DA (prix annuel)</p>
+          <a href="paiment.html" class="btn-offre">Souscrire</a>
+      </div>
+
+      <div class="offre-box">
+          <h2>Pack Complet Support & Analyse</h2>
+          <p>analyses approfondies des résultats et rapports analytiques mensuels, pour une gestion optimale et proactive des blooms.</p>
+          <p class="prix">42 000 DA (prix annuel)</p>
+          <a href="paiment.html" class="btn-offre">Souscrire</a>
+
+      </div>
+
+    </section>
+
+  </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+</body>
+</html>

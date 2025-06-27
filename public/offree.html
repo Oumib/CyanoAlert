@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>CyanoAlert - Offres & Paiement</title>
+  <link rel="stylesheet" href="css/offre.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/connecter.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+
+  </style>
+</head>
+<body>
+
+    <header id="header">
+        <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+        <ul>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+            <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+            <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+            <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+            <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+            <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+        </ul>
+    </header>
+
+
+  <!-- SECTION OFFRES -->
+  <div id="section-offres">
+    <!-- Slider automatique -->
+    <div class="e-slider">
+      <div class="e-slide-track">
+        <img class="e-slide" src="image/barrage.jpg" alt="Image 1" />
+        <img class="e-slide" src="image/barrage2.jpg" alt="Image 2" />
+        <img class="e-slide" src="image/cyan.jpg" alt="Image 3" />
+        <img class="e-slide" src="image/Cyanobacteria-57f2f6a63df78c690f68d491.jpg" alt="Image 4" />
+        <img class="e-slide" src="image/erie_oli_2019211.jpg" alt="Image 1" />
+        <img class="e-slide" src="image/free-photo-of-water-flowing-over-dam.jpeg" alt="Image 2" />
+        <img class="e-slide" src="image/image.png" alt="Image 3" />
+        <img class="e-slide" src="image/lakeeriebloom_oli2_20240813.jpg" alt="Image 4" />
+      </div>
+    </div>
+
+    <!-- Section des Offres principales -->
+    <section class="offres-section">
+      <div class="offre-box">
+        <h2>Offre 1 an</h2>
+        <p>Accès complet aux données, alertes en temps réel</p>
+        <p class="prix">240 000 DA (prix total)</p>
+        <button class="btn-offre" onclick="showPaiement('Offre 1 an', 23880)">Souscrire</button>
+      </div>
+
+      <div class="offre-box">
+        <h2>Offre 2 ans</h2>
+        <p>Accès complet aux données, alertes en temps réel</p>
+        <p class="prix">429 600 DA (prix total)</p>
+        <button class="btn-offre" onclick="showPaiement('Offre 2 ans', 42960)">Souscrire</button>
+      </div>
+
+      <div class="offre-box">
+        <h2>Offre 5 ans</h2>
+        <p>Accès complet aux données, alertes en temps réel et rapports mensuels personnalisés.</p>
+        <p class="prix">894 000 DA (prix total)</p>
+        <button class="btn-offre" onclick="showPaiement('Offre 5 ans', 89400)">Souscrire</button>
+      </div>
+
+      <div class="offre-box">
+        <h2>Offre 10 ans</h2>
+        <p>Accès complet aux données, alertes en temps réel et rapports mensuels personnalisés.</p>
+        <p class="prix">1 548 000 DA (prix total)</p>
+        <button class="btn-offre" onclick="showPaiement('Offre 10 ans', 154800)">Souscrire</button>
+      </div>
+    </section>
+
+    <!-- Section Services Complémentaires individuels -->
+    <section class="offres-section">
+      <div class="offre-box">
+        <h2>Rapport Analytique Mensuel</h2>
+        <p>Recevez un rapport détaillé chaque mois pour suivre l’évolution des blooms.</p>
+        <p class="prix">180 000 DA (prix annuel)</p>
+        <button class="btn-offre" onclick="showPaiement('Rapport Analytique Mensuel', 18000)">Souscrire</button>
+      </div>
+
+      <div class="offre-box">
+        <h2>Analyse Avancée des Résultats</h2>
+        <p>Accès à des analyses approfondies et personnalisées des données collectées.</p>
+        <p class="prix">300 000 DA (prix annuel)</p>
+        <button class="btn-offre" onclick="showPaiement('Analyse Avancée des Résultats', 30000)">Souscrire</button>
+      </div>
+
+      <div class="offre-box">
+        <h2>Pack Complet Support & Analyse</h2>
+        <p>Analyses approfondies des résultats et rapports analytiques mensuels, pour une gestion optimale et proactive des blooms.</p>
+        <p class="prix">420 000 DA (prix annuel)</p>
+        <button class="btn-offre" onclick="showPaiement('Pack Complet Support & Analyse', 42000)">Souscrire</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION PAIEMENT (cachée par défaut) -->
+  <div id="section-paiement" class="hidden">
+    <div class="background"></div>
+    <div id="login-box">
+      <div class="inscription">Paiement par carte CCP</div>
+      <p class="text2" id="texte-offre">Veuillez entrer les informations de votre carte Edahabia</p>
+
+      <form id="form-paiement" action="traitement_paiement.php" method="POST">
+        <input type="hidden" name="offre" id="input-offre" value="">
+        <input type="hidden" name="montant" id="input-montant" value="">
+
+        <input type="text" name="nom" placeholder="Nom du titulaire" required />
+        <input type="text" name="numero" placeholder="Numéro de carte (16 chiffres)" maxlength="16" required />
+        <input type="text" name="date_exp" placeholder="Date d'expiration (MM/AA)" required />
+        <input type="text" name="cvv" placeholder="Code CVV (3 chiffres)" maxlength="3" required />
+        <input type="text" name="montant_affiche" placeholder="Montant (DZD)" readonly />
+
+        <input type="submit" value="Payer maintenant" />
+      </form>
+
+      <button id="btn-annuler" onclick="showOffres()">Annuler</button>
+    </div>
+  </div>
+
+  <script>
+    // Affiche la section paiement et remplit le formulaire avec l'offre choisie
+    function showPaiement(nomOffre, montant) {
+      document.getElementById('section-offres').classList.add('hidden');
+      document.getElementById('section-paiement').classList.remove('hidden');
+
+      document.getElementById('texte-offre').textContent = `Paiement pour : ${nomOffre}`;
+      document.getElementById('input-offre').value = nomOffre;
+      document.getElementById('input-montant').value = montant;
+      document.getElementsByName('montant_affiche')[0].value = montant + ' DA';
+    }
+
+    // Revenir à la page offres
+    function showOffres() {
+      document.getElementById('section-paiement').classList.add('hidden');
+      document.getElementById('section-offres').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>

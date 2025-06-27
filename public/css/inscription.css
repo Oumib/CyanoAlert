@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,500');
+:root{
+  --primary: #1cb3b3;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: #222;
+  font-family: Verdana, sans-serif; /* <-- Police changée ici */
+  font-weight: 300;
+  background: #e8e8e8;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('barrage2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+#login-box {
+  width: 800px;
+  margin: 5px auto;
+  margin-top: 70px;
+  background: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  position: relative;
+}
+
+.Inscription {
+  font-family: 'Imprint MT Shadow', serif;
+  font-size: 34px;
+  text-align: center;
+  margin-bottom: 1px;
+  color: var(--primary);
+ 
+}
+
+.left {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Champs simples */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"]{
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 1px;
+  border: none;
+  border-bottom: 1.5px solid #aaa;
+  background: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  transition: 0.2s ease;
+  color: #000; /* <-- Couleur du texte en noir */
+  font-family: Verdana, sans-serif; /* <-- Police changée ici */
+
+}
+select {
+  width: 38%;
+  padding: 10px;
+  margin-bottom: 1px;
+  border: none;
+  border-bottom: 1.5px solid #aaa;
+  background: transparent;
+  font-family: Verdana, sans-serif; /* <-- Police changée ici */
+  font-size: 15px;
+  transition: 0.2s ease;
+  -webkit-appearance: none; /* Pour enlever le style par défaut sur Chrome/Safari */
+  -moz-appearance: none;    /* Pour Firefox */
+  appearance: none;
+  cursor: pointer;
+}
+input:focus {
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.row input {
+  width: 50%;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  width: 150px;
+  height: 40px;
+  background: var(--primary);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 20px;
+}
+
+input[type="submit"]:hover {
+  opacity: 0.9;
+  box-shadow: 1px 1px 10px var(--primary);
+  transform: translateY(-3px);
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+}
+
+.already-account {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.already-account p {
+  font-size: 14px;
+  color: #444;
+}
+
+.already-account a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.already-account a:hover {
+  text-decoration: underline;
+}
+.input-icon {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.input-icon input,
+.input-icon select {
+  width: 80%;
+  padding: 10px 10px 10px 35px; /* espace pour l’icône à gauche */
+  border: none;
+  border-bottom: 1.5px solid #aaa;
+  background: transparent;
+  font-family: Verdana, sans-serif; /* <-- Police changée ici */
+  font-size: 15px;
+  transition: 0.2s ease;
+  color: #000; /* <-- Couleur du texte en noir */
+
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  background-image: none;
+}
+.input-iconc {
+  position: relative;
+  width: 80%;
+  margin-bottom: 15px;
+}
+
+.input-iconc i {
+  position: absolute;
+  top: 48%;
+  left: 60px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.input-iconc input {
+  width: 70%;
+  padding: 10px 10px 10px 5px; /* espace pour l’icône à gauche */
+  border: none;
+  border-bottom: 1.5px solid #aaa;
+  background: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  transition: 0.2s ease;
+  color: #000; /* <-- Couleur du texte en noir */
+
+}
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Contactez-nous | CyanoAlert</title>
+  <link rel="stylesheet" type="text/css" href="css\header.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root{
+      --primary: #1cb3b3;
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 500px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.h{
+   
+    text-align: center;
+    color:#189e52;
+    font-size: 30px;
+}
+.b{
+    margin-left: 698px;
+    color:#3c3d3d;
+}
+        
+body {
+      background-color: #f2f7f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000000; /* Texte en noir */
+ }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 200px;
+    }
+
+    .title {
+      font-size: 36px;
+      color: var(--primary); /* Vert */
+      margin-bottom: 10px;
+      text-decoration: underline;
+    }
+
+    .subtitle {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2e8b57;
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #1f5c3c;
+    }
+
+    .thanks {
+      font-size: 16px;
+      margin-top: 30px;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .title { font-size: 28px; }
+      .subtitle { font-size: 18px; }
+      .info, .thanks { font-size: 16px; }
+      .social-icons a { font-size: 20px; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+
+    <!--header-->
+<header id="header">
+    <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+    <ul>
+        <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+        <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+        <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+        <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+        <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+        <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+        <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+        <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+    </ul>
+</header>
+
+  <div class="container">
+    <h1 class="title">Contactez-nous</h1>
+    <h2 class="subtitle">Comment pouvons-nous vous aider ?</h2>
+
+    <p class="info">
+      Si vous rencontrez des difficultés à utiliser le site <strong>CyanoAlert</strong>, un problème dans le système ou tout autre souci, nous sommes là pour vous aider.
+    </p>
+
+    <p class="info">📞 Appelez-nous au :</p>
+    <p class="info"><strong>0673 75 51 49</strong> ou <strong>0668 61 91 45</strong></p>
+    <p class="info">🕐 Tous les jours (même week-end) de 09h à 22h</p>
+
+    <div class="info social-icons">
+      📱 Retrouvez-nous sur :
+      <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+
+    <p class="thanks">Merci pour votre confiance 💚</p>
+  </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+</body>
+</html>

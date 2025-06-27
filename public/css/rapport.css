@@ -1,0 +1,103 @@
+:root {
+    --primary: #1cb3b3;
+    --bg: #f2f7f0;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: #000;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 160px auto 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 34px;
+    color: var(--primary);
+    margin-bottom: 35px;
+    text-decoration: underline;
+    letter-spacing: 1px;
+  }
+  
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+  
+  .container li {
+    margin-bottom: 16px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f7fdfd;
+    border: 1px solid #d0eeee;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+  
+  .container li:hover {
+    background: #e0fafa;
+  }
+  
+  .btn-download {
+    background-color: var(--primary);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-download:hover {
+    background-color: #128585;
+  }
+  
+  .btn-download::before {
+    content: '\f1c1'; /* Icône PDF */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      margin: 140px 16px 40px 16px;
+      padding: 24px;
+    }
+  
+    h1 {
+      font-size: 28px;
+    }
+  
+    li {
+      font-size: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .btn-download {
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+  }

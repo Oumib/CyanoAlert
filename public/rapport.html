@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Rapports | CyanoAlert</title>
+  <link rel="stylesheet" href="css\header.css">
+  <link rel="stylesheet"  href="css\rapport.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> 
+
+</head>
+<body>
+
+    <!--header-->
+  <header id="header">
+      <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+      <ul>
+          <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+          <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+          <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+          <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+          <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+          <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+          <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+          <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+      </ul>
+  </header>
+
+  <div class="container">
+    <h1>Rapports CyanoAlert</h1>
+    <ul>
+      <li>20 mai 2025 <a href="jour-2025-05-20.pdf" class="btn-download">Télécharger</a></li>
+      <li>19 mai 2025 <a href="jour-2025-05-19.pdf" class="btn-download">Télécharger</a></li>
+      <li>Semaine 13–19 mai 2025 <a href="semaine-2025-05-13.pdf" class="btn-download">Télécharger</a></li>
+      <li>Semaine 6–12 mai 2025 <a href="semaine-2025-05-06.pdf" class="btn-download">Télécharger</a></li>
+      <li>Mai 2025 <a href="mois-2025-05.pdf" class="btn-download">Télécharger</a></li>
+      <li>Avril 2025 <a href="mois-2025-04.pdf" class="btn-download">Télécharger</a></li>
+      <li>Année 2024 <a href="annee-2024.pdf" class="btn-download">Télécharger</a></li>
+      <li>Année 2023 <a href="annee-2023.pdf" class="btn-download">Télécharger</a></li>
+    </ul>
+  </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+</body>
+</html>

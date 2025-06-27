@@ -1,0 +1,147 @@
+:root {
+    --primary: #1cb3b3;
+    --secondary: #0d8d8d;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  body {
+    background-color: #f4f9ff;
+    overflow-y: auto;
+  }
+
+  header {
+    background-color: var(--primary);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+
+.t {
+background: linear-gradient(rgba(206, 234, 234, 0.8), rgba(13, 141, 141, 0.8)), 
+            url('barrage2.jpg') center/cover no-repeat;
+color: white;
+text-align: center;
+padding: 60px 20px;
+margin-top: 80px;
+}
+
+
+  .t h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+
+  .t p {
+    font-size: 20px;
+    margin-bottom: 25px;
+  }
+
+  .btn {
+    background: white;
+    color: var(--primary);
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+
+  .btn:hover {
+    background: #d2f4f4;
+  }
+
+  section {
+    padding: 60px 20px;
+  }
+
+  .features {
+    background-color: #e7fafd;
+    text-align: center;
+  }
+
+  .features h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--primary);
+  }
+
+  .feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .feature-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 270px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  }
+
+  .feature-box h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: var(--primary);
+  }
+
+  .feature-box p {
+    font-size: 16px;
+  }
+
+  .about, .mission {
+    text-align: center;
+    background-color: #ffffff;
+  }
+
+  .about h2, .mission h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
+
+  .about p, .mission p {
+    max-width: 750px;
+    margin: auto;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #444;
+  }
+
+  footer {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    
+  }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyanoAlert</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      height: 100vh;
+      width: 100vw;
+      color: white;
+      background: url('image/barrage.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .fancy-text {
+      font-family: 'Playfair Display', serif;
+      color: #ffffff;
+      text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.8);
+      font-size: larger;
+    }
+
+    .content-box {
+      position: fixed;
+      top: 50%;
+      right: 2.5rem; 
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem; 
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-white {
+      background-color: white;
+      color: #1cb3b3;
+      font-weight: 600;
+      font-size: 1.8rem; /* <-- taille agrandie */
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-white:hover {
+      background-color: #e0f2fe;
+    }
+
+    .btn-vert {
+      background-color: #1cb3b3;
+      color: white;
+      font-weight: 600;
+      font-size: 1.8rem; /* <-- taille agrandie */
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+
+    .btn-vert:hover {
+      background-color: #176a6a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content-box">
+    <div>
+      <h1 class="text-5xl font-bold fancy-text">Alertez avant qu’il ne soit trop tard.</h1>
+      <h2 class="text-2xl mt-4 fancy-text">
+        <b>CyanoAlert</b> vous aide à surveiller, prédire et agir contre les blooms d’algues toxiques,
+      </h2>
+      <h2 class="text-2xl mt-4 fancy-text"> simplement et efficacement.</h2>
+    </div>
+
+    <div class="btn">
+      <a href="auth.html#connexion" class="btn-white">Se connecter</a>
+      <a href="auth.html#inscription" class="btn-vert">S'inscrire</a>
+
+    </div>
+  </div>
+
+</body>
+</html>

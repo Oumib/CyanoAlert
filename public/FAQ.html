@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ - CyanoAlert</title>
+    <link rel="stylesheet" type="text/css" href="css\header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1cb3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #000;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* FAQ Content */
+        .FAQ {
+            text-align: center;
+            margin-top: 180px; /* Pour ne pas être caché par le header */
+            font-size: 40px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .reponses {
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .QL {
+            font-size: 22px;
+            color: var(--primary);
+            margin: 30px 100px 10px 100px;
+        }
+
+        .CL {
+            font-size: 18px;
+            color: #000;
+            margin: 0 100px 20px 100px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            #header {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            #header ul {
+                flex-direction: column;
+            }
+
+            #header ul li {
+                margin: 10px 0;
+            }
+
+            .QL, .CL {
+                margin: 0 20px;
+            }
+
+            .FAQ {
+                font-size: 32px;
+            }
+
+            .reponses {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body style="overflow-y: auto;">
+
+    <!--header-->
+    <header id="header">
+        <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+        <ul>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+            <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+            <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+            <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+            <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+            <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+        </ul>
+    </header>
+
+    <h2 class="FAQ">FAQ</h2> 
+    <h3 class="reponses">Les réponses aux questions les plus fréquemment posées</h3>
+
+    <h4 class="QL">1. Quel est le principe général de CyanoAlert ?</h4>
+    <p class="CL">
+        CyanoAlert est un système intelligent sous forme de <strong>site web</strong> conçu pour surveiller et 
+        <strong>prédire les blooms de cyanobactéries</strong> dans les plans d’eau.<br>
+        Notre plateforme est accessible <strong>gratuitement 24h/24 et 7j/7</strong>.<br>
+        Elle permet aux partenaires (établissements, chercheurs, collectivités…) de consulter les données environnementales, 
+        recevoir des alertes en cas de risque élevé, et accéder à des analyses avancées basées sur l’intelligence artificielle.
+    </p>
+
+    <h4 class="QL">2. Est-ce que vos services sont disponibles tous les jours, même la nuit ?</h4>
+    <p class="CL">
+        Oui. La plateforme <strong>CyanoAlert est disponible 24h/24 et 7j/7</strong>, et notre système de détection fonctionne en continu.<br>
+        Vous pouvez accéder aux données et aux alertes à tout moment, même les week-ends.
+    </p> 
+
+    <h4 class="QL">3. Comment puis-je vous contacter ?</h4>
+    <p class="CL"> 
+        Vous pouvez nous contacter via la page 
+        <a href="contact.html"><strong>Contactez-nous</strong></a> à tout moment.<br>
+        Nous restons à votre écoute pour toute question, remarque ou problème technique.
+    </p> 
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="css\notif.css">
+    <link rel="stylesheet" type="text/css" href="css\header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!--header-->
+    <header id="header">
+        <a href="Accueil.html" class="logo"><span>C</span>yanoAlert</a>
+        <ul>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+            <li><a href="service.html"><i class="fa-solid fa-store"></i> Marketplace</a></li>
+            <li><a href="offre.html"><i class="fa-solid fa-tags"></i> Offres</a></li>
+            <li><a href="rapport.html"><i class="fa-solid fa-clock-rotate-left"></i> Rapports</a></li>
+            <li><a href="notifications.html" title="Notifications"><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="contact.html" title="Contact"><i class="fa-solid fa-phone"></i></a></li>
+            <li><a href="FAQ.html" title="FAQ"><i class="fa-solid fa-question"></i></a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+        </ul>
+    </header>
+
+
+
+
+    <main class="notif-container">
+        <h1>Mes Notifications</h1>
+
+        <!-- Bloom dans 7 jours -->
+        <div class="notification">
+            <i class="fas fa-exclamation-triangle" style="color: orange;"></i>
+            <div class="notif-content">
+                <p><strong>Alerte :</strong> Une efflorescence de cyanobactéries est prévue dans <strong>7 jours</strong>.</p>
+                <span class="time">il y a 5 minutes</span>
+            </div>
+        </div>
+
+        <!-- Bloom en cours -->
+        <div class="notification">
+            <i class="fas fa-biohazard" style="color: red;"></i>
+            <div class="notif-content">
+                <p><strong>Urgent :</strong> Un bloom cyanobactérien est <strong>actuellement en cours</strong> dans votre zone.</p>
+                <span class="time">il y a 1 heure</span>
+            </div>
+        </div>
+
+        <!-- Qualité de l'eau dégradée -->
+        <div class="notification">
+            <i class="fas fa-tint" style="color: #0066cc;"></i>
+            <div class="notif-content">
+                <p><strong>Information :</strong> La qualité de l’eau potable est <strong>actuellement dégradée</strong>. Soyez vigilant(e).</p>
+                <span class="time">il y a 2 heures</span>
+            </div>
+        </div>
+
+        <!-- Abonnement se termine -->
+        <div class="notification">
+            <i class="fas fa-hourglass-half" style="color: #e6b800;"></i>
+            <div class="notif-content">
+                <p><strong>Attention :</strong> Votre abonnement expirera dans <strong>6 jours</strong>. Pensez à le renouveler.</p>
+                <span class="time">aujourd'hui</span>
+            </div>
+        </div>
+
+        <!-- Abonnement terminé -->
+        <div class="notification">
+            <i class="fas fa-times-circle" style="color: #b30000;"></i>
+            <div class="notif-content">
+                <p><strong>Important :</strong> Votre abonnement est arrivé à expiration.</p>
+                <span class="time">hier</span>
+            </div>
+        </div>
+
+        <!-- Rapport disponible -->
+        <div class="notification">
+            <i class="fas fa-file-alt" style="color: #3366cc;"></i>
+            <div class="notif-content">
+                <p><strong>Nouveau :</strong> Le rapport hebdomadaire sur la qualité de l’eau est disponible dans votre tableau de bord.</p>
+                <span class="time">hier</span>
+            </div>
+        </div>
+
+        <!-- Mise à jour disponible -->
+        <div class="notification">
+            <i class="fas fa-gear" style="color: #4CAF50;"></i>
+            <div class="notif-content">
+                <p><strong>Info :</strong> Une nouvelle mise à jour de CyanoAlert est disponible. Pensez à actualiser votre application.</p>
+                <span class="time">il y a 2 jours</span>
+            </div>
+        </div>
+
+        <!-- Prévention -->
+        <div class="notification">
+            <i class="fas fa-lightbulb" style="color: #f39c12;"></i>
+            <div class="notif-content">
+                <p><strong>Conseil :</strong> Évitez toute activité nautique dans les zones rouges pendant la période de bloom.</p>
+                <span class="time">il y a 3 jours</span>
+            </div>
+        </div>
+    </main>
+
+        <script>
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Très important pour envoyer les cookies de session
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Optionnel
+                // Redirection vers la page de connexion
+                window.location.href = 'auth.html';
+            } else {
+                alert('Erreur lors de la déconnexion');
+            }
+            } catch (error) {
+            console.error('Erreur de requête :', error);
+            alert('Erreur réseau lors de la déconnexion.');
+            }
+        });
+
+        
+    </script>
+
+</body>
+</html>

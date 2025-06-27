@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion / Inscription</title>
+  <link rel="stylesheet" type="text/css" href="css/connecter.css">
+  <link rel="stylesheet" type="text/css" href="css/inscription.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    #register-form {
+      display: none;
+    }
+    .switch-link {
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .row input {
+      flex: 1;
+    }
+    .checkbox-container {
+      margin: 10px 0;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div id="login-box">
+    <h1 class="inscription"><b id="form-title">Heureux de vous revoir</b></h1>
+
+    <!-- Formulaire Connexion -->
+    <div id="login-form">
+      <div class="text2">Vous n’avez pas de compte ?</div>
+      <div class="text3 switch-link" onclick="switchForm('register')">Inscrivez-vous</div>
+      <form>
+            <div class="input-iconc">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="mail" id="login-email" placeholder="E-mail"  required autocomplete="current-password">
+            </div>
+            <div class="input-iconc">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="psw" id="login-password" placeholder="Mot de passe" required autocomplete="current-password">
+            </div>
+        <div style="text-align: left; margin-top: 10px;">
+          <input type="checkbox" id="sevenir" />
+          <label for="sevenir">Se souvenir de moi</label>
+        </div>
+        <a href="mot_de_passe.html"><label class="texte">Mot de passe oublié ?</label></a>
+        <input type="submit" value="Connecter" />
+      </form>
+    </div>
+
+    <!-- Formulaire Inscription modifié -->
+    <div id="register-form">
+
+      <div class="already-account">
+        <p>Vous avez déjà un compte ? <div class="text3 switch-link" onclick="switchForm('login')">Connectez-vous</div></p>
+      </div>
+      <form onsubmit="return checkPasswords();">
+
+        <div class="row">
+            <div class="input-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" name="nom" id="nom" placeholder="Nom" required>
+            </div>
+            <div class="input-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" name="prenom" id="prenom" placeholder="Prénom" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="email" name="email" id="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-icon">
+            <i class="fas fa-phone"></i>
+            <input type="text" name="N_Tel" id="N_Tel" placeholder="N° de téléphone" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-icon">
+            <i class="fas fa-building"></i>
+            <input type="text" name="societe" id="societe" placeholder="Société" required autocomplete="username">
+            </div>
+            <div class="input-icon">
+            <i class="fas fa-map-marker-alt"></i>
+            <select name="wilaya" id="wilaya" required>
+                
+                    <option value="" disabled selected hidden>Willaya</option>
+                    <option value="01">01 - Adrar</option>
+                    <option value="02">02 - Chlef</option>
+                    <option value="03">03 - Laghouat</option>
+                    <option value="04">04 - Oum El Bouaghi</option>
+                    <option value="05">05 - Batna</option>
+                    <option value="06">06 - Béjaïa</option>
+                    <option value="07">07 - Biskra</option>
+                    <option value="08">08 - Béchar</option>
+                    <option value="09">09 - Blida</option>
+                    <option value="10">10 - Bouira</option>
+                    <option value="11">11 - Tamanrasset</option>
+                    <option value="12">12 - Tébessa</option>
+                    <option value="13">13 - Tlemcen</option>
+                    <option value="14">14 - Tiaret</option>
+                    <option value="15">15 - Tizi Ouzou</option>
+                    <option value="16">16 - Alger</option>
+                    <option value="17">17 - Djelfa</option>
+                    <option value="18">18 - Jijel</option>
+                    <option value="19">19 - Sétif</option>
+                    <option value="20">20 - Saïda</option>
+                    <option value="21">21 - Skikda</option>
+                    <option value="22">22 - Sidi Bel Abbès</option>
+                    <option value="23">23 - Annaba</option>
+                    <option value="24">24 - Guelma</option>
+                    <option value="25">25 - Constantine</option>
+                    <option value="26">26 - Médéa</option>
+                    <option value="27">27 - Mostaganem</option>
+                    <option value="28">28 - M'Sila</option>
+                    <option value="29">29 - Mascara</option>
+                    <option value="30">30 - Ouargla</option>
+                    <option value="31">31 - Oran</option>
+                    <option value="32">32 - El Bayadh</option>
+                    <option value="33">33 - Illizi</option>
+                    <option value="34">34 - Bordj Bou Arreridj</option>
+                    <option value="35">35 - Boumerdès</option>
+                    <option value="36">36 - El Tarf</option>
+                    <option value="37">37 - Tindouf</option>
+                    <option value="38">38 - Tissemsilt</option>
+                    <option value="39">39 - El Oued</option>
+                    <option value="40">40 - Khenchela</option>
+                    <option value="41">41 - Souk Ahras</option>
+                    <option value="42">42 - Tipaza</option>
+                    <option value="43">43 - Mila</option>
+                    <option value="44">44 - Aïn Defla</option>
+                    <option value="45">45 - Naâma</option>
+                    <option value="46">46 - Aïn Témouchent</option>
+                    <option value="47">47 - Ghardaïa</option>
+                    <option value="48">48 - Relizane</option>
+                    <option value="49">49 - El M'Ghair</option>
+                    <option value="50">50 - El Meniaa</option>
+                    <option value="51">51 - Ouled Djellal</option>
+                    <option value="52">52 - Bordj Baji Mokhtar</option>
+                    <option value="53">53 - Béni Abbès</option>
+                    <option value="54">54 - Timimoun</option>
+                    <option value="55">55 - Touggourt</option>
+                    <option value="56">56 - Djanet</option>
+                    <option value="57">57 - In Salah</option>
+                    <option value="58">58 - In Guezzam</option>
+            </select>        
+            
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="register-password" name="password" autocomplete="new-password" required>
+            </div>
+            <div class="input-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="confirmer_mot_de_passe" id="confirmer_mot_de_passe" placeholder="Confirmer le mot de passe" required autocomplete="new-password">
+            </div>
+        </div>
+
+        <div class="checkbox-container">
+            <input type="checkbox" name="recevoir_offres" id="recevoir_offres" required>
+            <label for="recevoir_offres">J'accepte toutes les déclarations en termes de services</label>
+        </div>
+
+        <input type="submit" name="signup_submit" value="S'inscrire">
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    function switchForm(target) {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const formTitle = document.getElementById('form-title');
+
+        if (target === 'register') {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        formTitle.innerHTML = 'Bienvenue parmi nous';
+        } else {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        formTitle.innerHTML = 'Heureux de vous revoir';
+        }
+    }
+
+    function checkPasswords() {
+        const password = document.getElementById("register-password").value;
+        const confirm = document.getElementById("confirmer_mot_de_passe").value;
+        if (password !== confirm) {
+        alert("Les mots de passe ne sont pas identiques.");
+        return false;
+        }
+        return true;
+    }
+      document.getElementById("confirmer_mot_de_passe").addEventListener("input", function () {
+    const pwd = document.getElementById("register-password").value;
+    const confirm = this.value;
+    if (pwd !== confirm) {
+      this.style.borderColor = "red";
+    } else {
+      this.style.borderColor = "green";
+    }
+  });
+  </script>
+<script src="s.js"></script>
+
+</body>
+</html>
